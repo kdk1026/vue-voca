@@ -33,7 +33,7 @@
     }
 
     function toggleDone() {
-        axios.put(`http://localhost:3001/words/${word.id}`, {
+        axios.put(`${process.env.VUE_APP_API_URL}/words/${word.id}`, {
             ...word,
             isDone: !isDone.value,
         })
@@ -46,7 +46,7 @@
 
     function del() {
         if ( confirm('삭제 하시겠습니까?') ) {
-            axios.delete(`http://localhost:3001/words/${word.id}`)
+            axios.delete(`${process.env.VUE_APP_API_URL}/words/${word.id}`)
             .then(res => {
                 if (res.status === 200) {
                     word.id = 0;

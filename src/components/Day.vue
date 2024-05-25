@@ -32,19 +32,19 @@
     const { day } = route.params;
 
     const fetchWords = async () => {
-        const response = await axios.get(`http://localhost:3001/words?day=${day}`);
+        const response = await axios.get(`${process.env.VUE_APP_API_URL}/words?day=${day}`);
         words.value = response.data;
     };
     fetchWords();
 
     const fetchDays = async () => {
-        const response = await axios.get('http://localhost:3001/days');
+        const response = await axios.get(`${process.env.VUE_APP_API_URL}/days`);
         days.value = response.data;
     };
     fetchDays();
 
     const fetchCurrentDay = async () => {
-        const response = await axios.get(`http://localhost:3001/days?day=${day}`);
+        const response = await axios.get(`${process.env.VUE_APP_API_URL}/days?day=${day}`);
         currentDay.value = response.data;
     };
     fetchCurrentDay();
@@ -62,19 +62,18 @@
 
         if ( confirm(msg) ) {
             if ( words.value.length === 0 ) {
-                axios.delete(`http://localhost:3001/days/${currentDay.value[0].id}`)
+                axios.delete(`${process.env.VUE_APP_API_URL}/days/${currentDay.value[0].id}`)
                 .then(res => {
                     if ( res.status == 200 ) {
                         router.push('/');
                     }
                 });
-
             } else {
                 words.value.forEach(async (word) => {
-                    await axios.delete(`http://localhost:3001/words/${word.id}`)
+                    await axios.delete(`${process.env.VUE_APP_API_URL}/words/${word.id}`)
                     .then(res => {
                         if ( res.status == 200 ) {
-                            axios.delete(`http://localhost:3001/days/${currentDay.value[0].id}`)
+                            axios.delete(`${process.env.VUE_APP_API_URL}/days/${currentDay.value[0].id}`)
                             .then(res => {
                                 if ( res.status == 200 ) {
                                     router.push('/');

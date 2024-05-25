@@ -16,13 +16,13 @@
     const router = useRouter();
 
     const fetchDays = async () => {
-        const response = await axios.get('http://localhost:3001/days');
+        const response = await axios.get(`${process.env.VUE_APP_API_URL}/days`);
         days.value = response.data;
     };
     fetchDays();
 
     function addDay() {
-        axios.post('http://localhost:3001/days', {
+        axios.post(`${process.env.VUE_APP_API_URL}/days`, {
             day: days.value.length + 1
         })
         .then(res => {

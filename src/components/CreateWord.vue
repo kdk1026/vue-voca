@@ -38,7 +38,7 @@
     const router = useRouter();
 
     const fetchDays = async () => {
-        const response = await axios.get('http://localhost:3001/days');
+        const response = await axios.get(`${process.env.VUE_APP_API_URL}/days`);
         days.value = response.data;
     };
     fetchDays();
@@ -49,7 +49,7 @@
         if ( !isLoading.value ) {
             isLoading.value = true;
 
-            axios.post('http://localhost:3001/words', {
+            axios.post(`${process.env.VUE_APP_API_URL}/words`, {
                 day: dayModel.value,
                 eng: engModel.value,
                 kor: korModel.value,

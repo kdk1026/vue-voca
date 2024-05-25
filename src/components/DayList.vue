@@ -17,7 +17,7 @@
 
     const days = ref([]);
     const fetchDays = async () => {
-        const response = await axios.get('http://localhost:3001/days');
+        const response = await axios.get(`${process.env.VUE_APP_API_URL}/days`);
         days.value = response.data;
     };
     fetchDays();
