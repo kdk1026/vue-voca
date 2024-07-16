@@ -25,8 +25,8 @@
 <script setup>
     import { inject, ref } from "vue";
     import { useRouter } from "vue-router";
-
-    const axios = inject('$axios');
+    import { getDays } from "../apis/days";
+    import { createWord } from "../apis/words";
 
     const days = ref([]);
     const isLoading = ref(false);
@@ -38,7 +38,7 @@
     const router = useRouter();
 
     const fetchDays = async () => {
-        const response = await axios.get(`${process.env.VUE_APP_API_URL}/days`);
+        const response = await getDays();
         days.value = response.data;
     };
     fetchDays();
@@ -49,12 +49,7 @@
         if ( !isLoading.value ) {
             isLoading.value = true;
 
-            axios.post(`${process.env.VUE_APP_API_URL}/words`, {
-                day: dayModel.value,
-                eng: engModel.value,
-                kor: korModel.value,
-                isDone: false                
-            })
+            createWord(dayModel.value, engModel.value, korModel.value)
             .then(res => {
                 if (res.status === 201) {
                     alert('생성이 완료 되었습니다.');

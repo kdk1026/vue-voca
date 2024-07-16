@@ -19,8 +19,9 @@
     import { useRoute, useRouter } from 'vue-router';
     import { inject, ref } from 'vue';
     import Word from "./Word.vue";
+    import { getDays, deleteDay, getDay } from "../apis/days";
+    import { getWords, deleteWord } from "../apis/words";
 
-    const axios = inject('$axios');
     const route = useRoute();
 
     const words = ref([]);
@@ -32,19 +33,19 @@
     const { day } = route.params;
 
     const fetchWords = async () => {
-        const response = await axios.get(`${process.env.VUE_APP_API_URL}/words?day=${day}`);
+        const response = await getWords(day);
         words.value = response.data;
     };
     fetchWords();
 
     const fetchDays = async () => {
-        const response = await axios.get(`${process.env.VUE_APP_API_URL}/days`);
+        const response = await getDays();
         days.value = response.data;
     };
     fetchDays();
 
     const fetchCurrentDay = async () => {
-        const response = await axios.get(`${process.env.VUE_APP_API_URL}/days?day=${day}`);
+        const response = await getDay(day);
         currentDay.value = response.data;
     };
     fetchCurrentDay();
@@ -62,7 +63,7 @@
 
         if ( confirm(msg) ) {
             if ( words.value.length === 0 ) {
-                axios.delete(`${process.env.VUE_APP_API_URL}/days/${currentDay.value[0].id}`)
+                deleteDay(currentDay.value[0].id)
                 .then(res => {
                     if ( res.status == 200 ) {
                         router.push('/');
@@ -70,10 +71,10 @@
                 });
             } else {
                 words.value.forEach(async (word) => {
-                    await axios.delete(`${process.env.VUE_APP_API_URL}/words/${word.id}`)
+                    await deleteWord(word.id)
                     .then(res => {
                         if ( res.status == 200 ) {
-                            axios.delete(`${process.env.VUE_APP_API_URL}/days/${currentDay.value[0].id}`)
+                            deleteDay(currentDay.value[0].id)
                             .then(res => {
                                 if ( res.status == 200 ) {
                                     router.push('/');

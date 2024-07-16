@@ -12,12 +12,11 @@
 
 <script setup>
     import { inject, ref } from 'vue';
-
-    const axios = inject('$axios');
+    import { getDays } from "../apis/days";
 
     const days = ref([]);
     const fetchDays = async () => {
-        const response = await axios.get(`${process.env.VUE_APP_API_URL}/days`);
+        const response = await getDays();
         days.value = response.data;
     };
     fetchDays();

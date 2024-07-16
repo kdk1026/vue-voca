@@ -8,23 +8,20 @@
 <script setup>
     import { inject, ref } from "vue";
     import { useRouter } from "vue-router";
-
-    const axios = inject('$axios');
+    import { getDays, createDay } from "../apis/days";
 
     const days = ref([]);
 
     const router = useRouter();
 
     const fetchDays = async () => {
-        const response = await axios.get(`${process.env.VUE_APP_API_URL}/days`);
+        const response = await getDays();
         days.value = response.data;
     };
     fetchDays();
 
     function addDay() {
-        axios.post(`${process.env.VUE_APP_API_URL}/days`, {
-            day: days.value.length + 1
-        })
+        createDay(days.value.length)
         .then(res => {
             if (res.status === 201) {
                 alert("생성이 완료 되었습니다");

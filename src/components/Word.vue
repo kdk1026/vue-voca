@@ -17,13 +17,12 @@
 
 <script setup>
     import { inject, ref } from 'vue';
+    import { deleteWord, updateWord } from "../apis/words";
 
     const props = defineProps({
         word: Object
     });
     const { word } = props;
-
-    const axios = inject('$axios');
 
     const isShow = ref(false);
     const isDone = ref(word.isDone);
@@ -33,10 +32,7 @@
     }
 
     function toggleDone() {
-        axios.put(`${process.env.VUE_APP_API_URL}/words/${word.id}`, {
-            ...word,
-            isDone: !isDone.value,
-        })
+        updateWord(word.id, {...word}, !isDone.value)
         .then(res => {
             if (res.status === 200) {
                 isDone.value = !isDone.value;
@@ -46,7 +42,7 @@
 
     function del() {
         if ( confirm('삭제 하시겠습니까?') ) {
-            axios.delete(`${process.env.VUE_APP_API_URL}/words/${word.id}`)
+            deleteWord(word.id)
             .then(res => {
                 if (res.status === 200) {
                     word.id = 0;
