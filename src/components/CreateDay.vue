@@ -6,7 +6,7 @@
 </template>
 
 <script setup>
-    import { inject, ref } from "vue";
+    import { ref } from "vue";
     import { useRouter } from "vue-router";
     import { getDays, createDay } from "../apis/days";
 

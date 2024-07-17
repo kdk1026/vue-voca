@@ -11,7 +11,7 @@
 </template>
 
 <script setup>
-    import { inject, ref } from 'vue';
+    import { ref } from 'vue';
     import { getDays } from "../apis/days";
 
     const days = ref([]);

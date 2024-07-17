@@ -23,7 +23,7 @@
 </template>
 
 <script setup>
-    import { inject, ref } from "vue";
+    import { ref } from "vue";
     import { useRouter } from "vue-router";
     import { getDays } from "../apis/days";
     import { createWord } from "../apis/words";

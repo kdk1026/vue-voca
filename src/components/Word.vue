@@ -16,7 +16,7 @@
 </template>
 
 <script setup>
-    import { inject, ref } from 'vue';
+    import { ref } from 'vue';
     import { deleteWord, updateWord } from "../apis/words";
 
     const props = defineProps({

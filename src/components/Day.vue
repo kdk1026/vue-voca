@@ -17,7 +17,7 @@
 
 <script setup>
     import { useRoute, useRouter } from 'vue-router';
-    import { inject, ref } from 'vue';
+    import { ref } from 'vue';
     import Word from "./Word.vue";
     import { getDays, deleteDay, getDay } from "../apis/days";
     import { getWords, deleteWord } from "../apis/words";
